@@ -1,9 +1,12 @@
 ## IMPORT LIBRARIES ##
 
+from moviepy import VideoFileClip
 from pynput import keyboard
 from pynput import mouse
+import random
 import winsound
 import time
+import os
 
 
 
@@ -16,7 +19,10 @@ tick_start_time = 0
 deltatime = 0
 key_events = []
 skip_listen = False
-
+clip_path = r'D:/Replay Videos/Mage Arena/'
+output_path = r'C:/Users/xela_/Desktop/SkinwalkerClips/'
+clip_index = 0
+sessionID = random.randint(100,999)
 
 
 ## KEY LISTENER ##
@@ -122,6 +128,16 @@ def activate_secondary_ability(current_ability):
         case _:
             print("### No Ability Active ###")
 
+def convert_mp4_to_wav(input_mp4_path, output_wav_path):
+    try:
+        video_clip = VideoFileClip(input_mp4_path)
+        video_clip = video_clip.subclipped(video_clip.duration - 2, video_clip.duration)
+        video_clip.audio.write_audiofile(output_wav_path, codec='pcm_s16le')
+        video_clip.close()
+        print(f"Successfully converted '{input_mp4_path}' to '{output_wav_path}'")
+    except Exception as e:
+        print(f"An error occurred during conversion: {e}")
+
 
 
 ## MAIN SCRIPT LOOP ##
@@ -129,7 +145,7 @@ def activate_secondary_ability(current_ability):
 while script_running:
     is_listener_alive()
     set_tick_start_time()
-    time.sleep(0.2)
+    time.sleep(0.5)
     
     for key in key_events:
 
@@ -164,5 +180,17 @@ while script_running:
         cooldown = 0
     print('Cooldown:', cooldown)
     print_keys()
+
+    clip_names = os.listdir(clip_path)
+    if len(clip_names):
+        print('### Converting files ###')
+        for clip in clip_names:
+            full_clip_path = clip_path + clip
+            convert_mp4_to_wav(full_clip_path, output_path + 'mimic' + str(clip_index) + '_' + str(sessionID) + '.wav')
+            os.remove(full_clip_path)
+            clip_index += 1
+    else:
+        print('No files to convert.')
+
     print()
     clear_keys()
