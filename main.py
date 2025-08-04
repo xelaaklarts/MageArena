@@ -130,22 +130,36 @@ while script_running:
     
     for key in key_events:
 
-        if key == '1':
+        if key == '1' or key == '!':
             current_ability = "FireBall"
-        if key == '2':
+        if key == '2' or key == '@':
             current_ability = "Freeze"
-        if key == '3':
+        if key == '3' or key == "#":
             current_ability = "WormHole"
-        if key == '4':
+        if key == '4' or key == '$':
             current_ability = "MagicMissile"
+        if key == '5' or key == '%':
+            current_ability = 'NONE'
+        if key == '6' or key == '^':
+            current_ability = 'NONE'
         if key == 'Left_Button':
-            activate_main_ability(current_ability)
+            if cooldown == 0:
+                activate_main_ability(current_ability)
+                cooldown += 1
+            else:
+                print('### COOLDOWN ACTIVE ###')
         if key == 'Right_Button':
-            activate_secondary_ability(current_ability)
+            if cooldown == 0:
+                activate_secondary_ability(current_ability)
+                cooldown += 1
+            else:
+                print('### COOLDOWN ACTIVE ###')
 
     print('Current ability:', current_ability)
-
-    get_delta_time()
+    cooldown  -= get_delta_time()
+    if cooldown < 0:
+        cooldown = 0
+    print('Cooldown:', cooldown)
     print_keys()
     print()
     clear_keys()
