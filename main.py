@@ -191,7 +191,7 @@ while script_running:
         print('### Converting files ###')
         for clip in clip_names:
             full_clip_path = clip_path + clip
-            convert_mp4_to_wav(full_clip_path, output_path + 'mimic' + str(clip_index) + '_' + str(sessionID) + '.wav')
+            convert_mp4_to_wav(full_clip_path, output_path + 'mimic' + str(sessionID) + '_' + str(clip_index) + '.wav')
             try:
                 os.remove(full_clip_path)
             except Exception as e:
