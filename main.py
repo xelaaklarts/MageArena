@@ -43,14 +43,16 @@ def on_press(key):
             key_events.append(key.char)
             print('Key {0} added to event list.'.format(key.char))
         except AttributeError:
-            key_events.append(key.char)
-            print('Special key {0} added to event list.'.format(key))
+            # key_events.append(key.char)
+            # print('Special key {0} added to event list.'.format(key))
+            pass
 
 def on_release(key):
-    if not skip_listen:
-        if key == keyboard.Key.esc:
-            # Stop listener
-            return False
+    # if not skip_listen:
+    #     if key == keyboard.Key.esc:
+    #         # Stop listener
+    #         return False
+    pass
 
 keyboard_listener = keyboard.Listener(on_press=on_press, on_release=on_release)
 keyboard_listener.start()
