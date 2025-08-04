@@ -49,9 +49,12 @@ def on_press(key):
             key_events.append(key.char)
             print('Key {0} added to event list.'.format(key.char))
         except AttributeError:
-            # key_events.append(key.char)
-            # print('Special key {0} added to event list.'.format(key))
-            pass
+            try:
+                key_events.append(key)
+                print('Special key {0} added to event list.'.format(key))
+            except AttributeError as e:
+                print(e)
+                
 
 def on_release(key):
     # if not skip_listen:
@@ -131,7 +134,7 @@ def activate_secondary_ability(current_ability):
 def convert_mp4_to_wav(input_mp4_path, output_wav_path):
     try:
         video_clip = VideoFileClip(input_mp4_path)
-        video_clip = video_clip.subclipped(video_clip.duration - 4, video_clip.duration)
+        video_clip = video_clip.subclipped(video_clip.duration - 3, video_clip.duration)
         video_clip.audio.write_audiofile(output_wav_path, codec='pcm_s16le')
         video_clip.close()
         print(f"Successfully converted '{input_mp4_path}' to '{output_wav_path}'")
@@ -161,6 +164,8 @@ while script_running:
             current_ability = 'NONE'
         if key == '6' or key == '^':
             current_ability = 'NONE'
+        if key == keyboard.Key.esc:
+            current_ability = 'NONE'
         if key == 'Left_Button':
             if cooldown == 0:
                 activate_main_ability(current_ability)
@@ -187,7 +192,10 @@ while script_running:
         for clip in clip_names:
             full_clip_path = clip_path + clip
             convert_mp4_to_wav(full_clip_path, output_path + 'mimic' + str(clip_index) + '_' + str(sessionID) + '.wav')
-            os.remove(full_clip_path)
+            try:
+                os.remove(full_clip_path)
+            except Exception as e:
+                print(f"An error occurred during deletion: {e}")
             clip_index += 1
     else:
         print('No files to convert.')
