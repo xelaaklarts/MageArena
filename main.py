@@ -89,10 +89,11 @@ def is_listener_alive():
 def hotkey_activate(char):
     global skip_listen
     skip_listen = True
-    # with key_controller.pressed(keyboard.Key.alt):
     key_controller.press(keyboard.Key.alt)
+    key_controller.press(keyboard.Key.shift)
     key_controller.press(char)
     key_controller.release(char)
+    key_controller.release(keyboard.Key.shift)
     key_controller.release(keyboard.Key.alt)
     skip_listen = False
 
