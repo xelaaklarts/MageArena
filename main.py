@@ -19,7 +19,7 @@ tick_start_time = 0
 deltatime = 0
 key_events = []
 skip_listen = False
-clip_path = r'D:/Replay Videos/Mage Arena/'
+clip_path = r'D:/Replay Videos/Desktop/'
 output_path = r'C:/Users/xela_/Desktop/SkinwalkerClips/'
 clip_index = 0
 sessionID = random.randint(100,999)
@@ -131,7 +131,7 @@ def activate_secondary_ability(current_ability):
 def convert_mp4_to_wav(input_mp4_path, output_wav_path):
     try:
         video_clip = VideoFileClip(input_mp4_path)
-        video_clip = video_clip.subclipped(video_clip.duration - 2, video_clip.duration)
+        video_clip = video_clip.subclipped(video_clip.duration - 4, video_clip.duration)
         video_clip.audio.write_audiofile(output_wav_path, codec='pcm_s16le')
         video_clip.close()
         print(f"Successfully converted '{input_mp4_path}' to '{output_wav_path}'")
