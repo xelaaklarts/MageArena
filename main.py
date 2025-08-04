@@ -90,8 +90,10 @@ def hotkey_activate(char):
     global skip_listen
     skip_listen = True
     # with key_controller.pressed(keyboard.Key.alt):
+    key_controller.press(keyboard.Key.alt)
     key_controller.press(char)
     key_controller.release(char)
+    key_controller.release(keyboard.Key.alt)
     skip_listen = False
 
 def activate_main_ability(current_ability):
